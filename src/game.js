@@ -1,19 +1,37 @@
 import React from 'react';
+import Immutable from 'immutable'
 import { connect } from 'react-redux';
 import './index.css';
 import Board from './board.js';
 import {toggleSort, jumpTo, handleClick} from './actions.js'
 
 function Game(props) {
+    //console.log(props)
 
-    const history = props.history;
+    function handleClicked(index){
+        const history = props.history.toJS(); // if we go back in previous move, we slice all the next moves of the "future"
+        const current = history[history.length -1];
+        const squares = current.squares; //gia copy, kai oxi panw sto idio to squares array
+
+        if (calculateWinner(squares).winner || squares[index]){
+          return;
+        }
+        squares[index] = props.xIsNext ? 'X' : 'O';
+
+        props.handleClick(index,squares,props.stepNumber+1,props.xIsNext)
+    }
+
+
+
+    const history = props.history.toJS();
     const current = history[props.stepNumber];
-    const winnerInfo = calculateWinner(current.squares); // pernaw to object poy epistrefei h calculateWInner se mia metabliti gia na mhn thn kalw synexeia
+    const squares = current.squares;
+    const winnerInfo = calculateWinner(squares); // pernaw to object poy epistrefei h calculateWInner se mia metabliti gia na mhn thn kalw synexeia
 
     let moves = history.map((step, move) => {  //allaksa to moves apo const se let giati pleon den menei stathero
-      const moveLocation = step.moveLocation;
-      const row = 1 + Math.floor(moveLocation / 3);
-      const col = 1 + moveLocation % 3;
+      const index = step.index;
+      const row = 1 + Math.floor(index / 3);
+      const col = 1 + index % 3;
 
       const desc = move ?
         `Go to move #${move} (${row}, ${col})`:
@@ -49,14 +67,14 @@ function Game(props) {
         <div className="game-board">
           <Board
             square = {current.squares}
-            onClick = {index => props.handleClick(index)}
+            onClick = {index => handleClicked(index)}
             winnerLine = {winnerInfo.winnerLine}
           />
         </div>
         <div className="game-info">
           <div>{status}</div>
           <p><strong>Sort: </strong>{isAscending ? "Ascending" : "Descending"}</p>
-          <button onClick={() => props.handleToggleSort()}>
+          <button onClick={() => props.handleToggleSort(isAscending)}>
             Toggle Sort
           </button>
           <ol>{moves}</ol>
@@ -65,6 +83,7 @@ function Game(props) {
     );
 
 }
+
 
 
 export function calculateWinner(squares) {
@@ -106,18 +125,19 @@ export function calculateWinner(squares) {
 const mapStateToProps = state=> {
   //console.log(state)
   return {
-    isAscending: state.isAscending,
-    xIsNext: state.xIsNext,
-    stepNumber: state.stepNumber,
-    history: state.history,
+    isAscending: state.get('isAscending'),
+    xIsNext: state.get('xIsNext'),
+    stepNumber: state.get('stepNumber'),
+    history: state.get('history'),
+    //squares: state.getIn(['history', 'squares'])
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    handleToggleSort: () => { dispatch(toggleSort())},
+    handleToggleSort: (isAscending) => { dispatch(toggleSort(isAscending))},
     jumpTo: (move) => { dispatch(jumpTo(move))},
-    handleClick: (index) => {dispatch(handleClick(index))}
+    handleClick: (...props) => {dispatch(handleClick(...props))}
   }
 }
 

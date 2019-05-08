@@ -1,8 +1,9 @@
 import {TOGGLE_SORT, JUMP, CLICK} from './constants.js'
 
-export function toggleSort(){
+export function toggleSort(isAscending){
   return {
     type: TOGGLE_SORT,
+    isAscending:isAscending,
   }
 }
 
@@ -13,9 +14,12 @@ export function jumpTo(move){
   }
 }
 
-export function handleClick(index){
+export function handleClick(index,squares,stepNumber,xIsNext){
   return {
     type: CLICK,
     index: index,
+    squares: squares,
+    stepNumber: stepNumber,
+    xIsNext: xIsNext,
   }
 }

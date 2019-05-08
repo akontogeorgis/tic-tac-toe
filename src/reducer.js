@@ -1,44 +1,39 @@
+import {fromJS, setIn, set} from 'immutable'
 import {TOGGLE_SORT, JUMP, CLICK} from './constants.js'
 import {calculateWinner} from './game.js'
-const initialState = {
+
+const initialState = fromJS( {
   isAscending: true,
   xIsNext: true,
   stepNumber: 0,
   history: [{
     squares: Array(9).fill(null)
   }],
-}
+})
 
 export default (state = initialState, action) => {
   switch (action.type){
 
     case TOGGLE_SORT:
-      return Object.assign({}, state, {
-        isAscending: !state.isAscending
-      })
+      return state.set('isAscending', !action.isAscending)
 
     case JUMP:
-      return Object.assign({}, state, {
-        stepNumber: action.move,
-        xIsNext: (action.move%2) === 0
-      })
+      return state.set('stepNumber', action.move).set('xIsNext', (action.move%2) === 0)
 
     case CLICK:
-      const history = state.history.slice(0, state.stepNumber + 1); // if we go back in previous move, we slice all the next moves of the "future"
-      const current = history[history.length -1];
-      const squares = current.squares.slice(); //gia copy, kai oxi panw sto idio to squares array
-      if (calculateWinner(squares).winner || squares[action.index]){
-        return state;
-      }
-      squares[action.index] = state.xIsNext ? 'X' : 'O';
-      return Object.assign({}, state, {
-          history: history.concat([{
-          squares:squares,
-          moveLocation: action.index
-          }]),
-          stepNumber: history.length,
-          xIsNext: !state.xIsNext
-      })
+
+      /*etsi ginetai setIn genika, alla edw thelw update sto yparxon state kai na mhn grafw panw sto previous
+      return state.setIn(['history', 'squares'],action.squares).setIn(['history', 'moveLocation'],action.index)
+          .set('stepNumber',action.stepNumber)
+          .set('xIsNext', !state.xIsNext)
+      */
+
+      //second way for concat on state and not erase the previous, but doing update
+      //return state.setIn(['history'], state.get('history').concat({squares: action.squares, index: action.index}))
+
+      return state.update('history', history => history.concat({squares: action.squares, index: action.index}))
+          .set('stepNumber', action.stepNumber)
+          .set('xIsNext', !action.xIsNext)
     default:
         return state;
   }
