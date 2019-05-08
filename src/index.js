@@ -4,7 +4,6 @@ import {Provider} from 'react-redux';
 import Game from './game.js';
 import createStore from './create-store.js'
 import './index.css';
-// ========================================
 
 const store = createStore();
 

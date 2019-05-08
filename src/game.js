@@ -4,14 +4,14 @@ import { connect } from 'react-redux';
 import './index.css';
 import Board from './board.js';
 import {toggleSort, jumpTo, handleClick} from './actions.js'
+import {calculateWinner} from './calculateWinner.js'
 
 function Game(props) {
-    //console.log(props)
 
     function handleClicked(index){
-        const history = props.history.toJS(); // if we go back in previous move, we slice all the next moves of the "future"
+        const history = props.history.toJS();
         const current = history[history.length -1];
-        const squares = current.squares; //gia copy, kai oxi panw sto idio to squares array
+        const squares = current.squares;
 
         if (calculateWinner(squares).winner || squares[index]){
           return;
@@ -26,9 +26,9 @@ function Game(props) {
     const history = props.history.toJS();
     const current = history[props.stepNumber];
     const squares = current.squares;
-    const winnerInfo = calculateWinner(squares); // pernaw to object poy epistrefei h calculateWInner se mia metabliti gia na mhn thn kalw synexeia
+    const winnerInfo = calculateWinner(squares);
 
-    let moves = history.map((step, move) => {  //allaksa to moves apo const se let giati pleon den menei stathero
+    let moves = history.map((step, move) => {
       const index = step.index;
       const row = 1 + Math.floor(index / 3);
       const col = 1 + index % 3;
@@ -49,7 +49,7 @@ function Game(props) {
     })
 
     let status;
-    if(winnerInfo.winner) { //if not null
+    if(winnerInfo.winner) {
       status = 'Winner: ' + winnerInfo.winner;
     }else if (winnerInfo.isDraw) {
       status = "Draw";
@@ -59,9 +59,9 @@ function Game(props) {
 
     const isAscending = props.isAscending;
     if (!isAscending) {
-      moves.reverse(); //antistrefw thn seira otan einai desceding
+      moves.reverse();
     }
-    //console.log(this.props);
+
     return (
       <div className="game">
         <div className="game-board">
@@ -81,55 +81,14 @@ function Game(props) {
         </div>
       </div>
     );
-
-}
-
-
-
-export function calculateWinner(squares) {
-  const lines = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6],
-  ];
-  for (let i = 0; i < lines.length; i++) {
-    const [a, b, c] = lines[i];
-    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return {
-        winner:squares[a],
-        winnerLine:lines[i], //take the line of the winner
-        isDraw:false,
-      };
-    }
-  }
-
-  let isDraw = true;
-  for (let i = 0; i < squares.length; i++) {
-    if (squares[i] === null) {
-      isDraw = false;
-      break;
-    }
-  }
-  return {
-    winner: null,
-    line: null,
-    isDraw: isDraw
-  };
 }
 
 const mapStateToProps = state=> {
-  //console.log(state)
   return {
     isAscending: state.get('isAscending'),
     xIsNext: state.get('xIsNext'),
     stepNumber: state.get('stepNumber'),
     history: state.get('history'),
-    //squares: state.getIn(['history', 'squares'])
   }
 }
 
@@ -142,4 +101,3 @@ const mapDispatchToProps = dispatch => {
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(Game);
-//export default Game;
