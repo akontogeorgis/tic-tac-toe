@@ -2,51 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import './index.css';
 import Board from './board.js';
+import {toggleSort, jumpTo, handleClick} from './actions.js'
 
-import {toggleSort, jumpTo} from './actions.js'
+function Game(props) {
 
-class Game extends React.Component {
-  constructor(props){
-    super(props);
-  }
-
-  handleClick(i){
-    const history = this.props.history.slice(0, this.props.stepNumber + 1); // if we go back in previous move, we slice all the next moves of the "future"
-    const current = history[history.length -1];
-    const squares = current.squares.slice(); //gia copy, kai oxi panw sto idio to squares array
-
-    if (calculateWinner(squares).winner || squares[i]){
-      return;
-    }
-    squares[i] = this.props.xIsNext ? 'X' : 'O';
-    this.setState({
-        history: history.concat([{
-        squares:squares,
-        moveLocation: i
-      }]),
-      stepNumber: history.length,
-      xIsNext: !this.props.xIsNext
-    });
-  }
-/*
-  jumpTo(step) {
-    this.setState({
-      stepNumber: step,
-      xIsNext: (step%2) === 0
-    });
-  }
-*/
-/*
-  handleToggleSort() {
-    this.setState({
-      isAscending: !this.state.isAscending //antistrefw thn boolean se kathe pathma toy koympiou
-    });
-  }
-*/
-
-  render() {
-    const history = this.props.history;
-    const current = history[this.props.stepNumber];
+    const history = props.history;
+    const current = history[props.stepNumber];
     const winnerInfo = calculateWinner(current.squares); // pernaw to object poy epistrefei h calculateWInner se mia metabliti gia na mhn thn kalw synexeia
 
     let moves = history.map((step, move) => {  //allaksa to moves apo const se let giati pleon den menei stathero
@@ -61,8 +22,8 @@ class Game extends React.Component {
       return (
         <li key ={move}>
           <button
-          className = {move === this.props.stepNumber ? 'selected-move' : ''}
-          onClick = { () => this.props.jumpTo(move)}>
+          className = {move === props.stepNumber ? 'selected-move' : ''}
+          onClick = { () => props.jumpTo(move)}>
             {desc}
           </button>
         </li>
@@ -75,38 +36,38 @@ class Game extends React.Component {
     }else if (winnerInfo.isDraw) {
       status = "Draw";
     }else {
-      status = 'Next player: ' + (this.props.xIsNext ? 'X' :'O');
+      status = 'Next player: ' + (props.xIsNext ? 'X' :'O');
     }
 
-    const isAscending = this.props.isAscending;
+    const isAscending = props.isAscending;
     if (!isAscending) {
       moves.reverse(); //antistrefw thn seira otan einai desceding
     }
-    console.log(this.props);
+    //console.log(this.props);
     return (
       <div className="game">
         <div className="game-board">
           <Board
             square = {current.squares}
-            onClick = {i => this.props.handleClick(index)}
+            onClick = {index => props.handleClick(index)}
             winnerLine = {winnerInfo.winnerLine}
           />
         </div>
         <div className="game-info">
           <div>{status}</div>
           <p><strong>Sort: </strong>{isAscending ? "Ascending" : "Descending"}</p>
-          <button onClick={() => this.props.handleToggleSort()}>
+          <button onClick={() => props.handleToggleSort()}>
             Toggle Sort
           </button>
           <ol>{moves}</ol>
         </div>
       </div>
     );
-  }
+
 }
 
 
-function calculateWinner(squares) {
+export function calculateWinner(squares) {
   const lines = [
     [0, 1, 2],
     [3, 4, 5],
@@ -143,7 +104,7 @@ function calculateWinner(squares) {
 }
 
 const mapStateToProps = state=> {
-  console.log(state)
+  //console.log(state)
   return {
     isAscending: state.isAscending,
     xIsNext: state.xIsNext,

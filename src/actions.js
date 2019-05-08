@@ -3,7 +3,6 @@ import {TOGGLE_SORT, JUMP, CLICK} from './constants.js'
 export function toggleSort(){
   return {
     type: TOGGLE_SORT,
-
   }
 }
 
@@ -14,7 +13,7 @@ export function jumpTo(move){
   }
 }
 
-export function handleClick(i){
+export function handleClick(index){
   return {
     type: CLICK,
     index: index,

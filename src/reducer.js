@@ -1,6 +1,5 @@
-import {TOGGLE_SORT, JUMP} from './constants.js'
-import actions from './actions.js'
-
+import {TOGGLE_SORT, JUMP, CLICK} from './constants.js'
+import {calculateWinner} from './game.js'
 const initialState = {
   isAscending: true,
   xIsNext: true,
@@ -11,7 +10,6 @@ const initialState = {
 }
 
 export default (state = initialState, action) => {
-  console.log(state)
   switch (action.type){
 
     case TOGGLE_SORT:
@@ -26,25 +24,21 @@ export default (state = initialState, action) => {
       })
 
     case CLICK:
+      const history = state.history.slice(0, state.stepNumber + 1); // if we go back in previous move, we slice all the next moves of the "future"
+      const current = history[history.length -1];
+      const squares = current.squares.slice(); //gia copy, kai oxi panw sto idio to squares array
+      if (calculateWinner(squares).winner || squares[action.index]){
+        return state;
+      }
+      squares[action.index] = state.xIsNext ? 'X' : 'O';
       return Object.assign({}, state, {
-        const history = state.history.slice(0, state.stepNumber + 1); // if we go back in previous move, we slice all the next moves of the "future"
-        const current = history[history.length -1];
-        const squares = current.squares.slice(); //gia copy, kai oxi panw sto idio to squares array
-
-        if (calculateWinner(squares).winner || squares[i]){
-          return;
-        }
-        squares[i] = state.xIsNext ? 'X' : 'O';
-        this.setState({
-            history: history.concat([{
-            squares:squares,
-            moveLocation: i
+          history: history.concat([{
+          squares:squares,
+          moveLocation: action.index
           }]),
           stepNumber: history.length,
           xIsNext: !state.xIsNext
-        });
       })
-
     default:
         return state;
   }

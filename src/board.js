@@ -33,8 +33,6 @@ import Square from './square';
 
  export default Board;
 
-
-
 /* as class
 import React from 'react';
 import './index.css';
