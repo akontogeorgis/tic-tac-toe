@@ -1,11 +1,25 @@
 import React from 'react';
-import Immutable from 'immutable'
+//import Immutable from 'immutable'
 import { connect } from 'react-redux';
 import Board from '../board/board.js';
 import {toggleSort, jumpTo, handleClick} from '../../actions/actions.js'
 import {calculateWinner} from '../../utils/calculateWinner.js'
+import axios from 'axios';
 
 function Game(props) {
+
+    axios.get('/a')
+        .then(function (response) {
+            console.log(response);
+            for(let i=0;i<=1e10;i++){
+
+            }
+            console.log('ok')
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+
 
     function handleClicked(index){
         const history = props.history.toJS();
