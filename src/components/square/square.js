@@ -1,6 +1,5 @@
 import React from 'react';
-import './index.css';
-/////
+
  function Square ({value, onClick, isWinnerSquare}){
     return (
       <button
@@ -12,3 +11,4 @@ import './index.css';
 }
 
 export default Square;
+

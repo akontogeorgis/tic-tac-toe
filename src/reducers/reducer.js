@@ -1,6 +1,5 @@
 import {fromJS, setIn, set} from 'immutable'
-import {TOGGLE_SORT, JUMP, CLICK} from './constants.js'
-import {calculateWinner} from './calculateWinner.js'
+import {TOGGLE_SORT, JUMP, CLICK} from '../constants/constants.js'
 
 const initialState = fromJS( {
   isAscending: true,

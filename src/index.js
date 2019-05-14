@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
-import Game from './game.js';
-import createStore from './create-store.js'
-import './index.css';
+import Game from './components/game/game.js';
+import createStore from './configure-store/create-store.js'
+import './styles/index.css';
 
 const store = createStore();
 

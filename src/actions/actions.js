@@ -1,4 +1,4 @@
-import {TOGGLE_SORT, JUMP, CLICK} from './constants.js'
+import {TOGGLE_SORT, JUMP, CLICK} from '../constants/constants.js'
 
 export function toggleSort(isAscending){
   return {

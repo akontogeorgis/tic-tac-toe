@@ -1,6 +1,5 @@
 import React from 'react';
-import './index.css';
-import Square from './square';
+import Square from '../square/square.js';
 
  function Board ({square, onClick, winnerLine = []}) {
 

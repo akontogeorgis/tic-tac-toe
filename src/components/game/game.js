@@ -1,10 +1,9 @@
 import React from 'react';
 import Immutable from 'immutable'
 import { connect } from 'react-redux';
-import './index.css';
-import Board from './board.js';
-import {toggleSort, jumpTo, handleClick} from './actions.js'
-import {calculateWinner} from './calculateWinner.js'
+import Board from '../board/board.js';
+import {toggleSort, jumpTo, handleClick} from '../../actions/actions.js'
+import {calculateWinner} from '../../utils/calculateWinner.js'
 
 function Game(props) {
 
@@ -20,8 +19,6 @@ function Game(props) {
 
         props.handleClick(index,squares,props.stepNumber+1,props.xIsNext)
     }
-
-
 
     const history = props.history.toJS();
     const current = history[props.stepNumber];
