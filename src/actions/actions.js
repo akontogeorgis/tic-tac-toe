@@ -1,4 +1,4 @@
-import {TOGGLE_SORT, JUMP, CLICK} from '../constants/constants.js'
+import {TOGGLE_SORT, JUMP, CLICK, API_CALL_REQUEST} from '../constants/constants.js'
 
 export function toggleSort(isAscending){
   return {
@@ -23,3 +23,12 @@ export function handleClick(index,squares,stepNumber,xIsNext){
     xIsNext: xIsNext,
   }
 }
+
+export function apiCallRequest(apiCall){
+  return{
+    type: API_CALL_REQUEST,
+    apiCall:apiCall,
+  }
+}
+
+
