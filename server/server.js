@@ -18,7 +18,7 @@ function myMiddleware (req, res, next) {
 //app.use(myMiddleware)
 
 app.get('/a', (req, res) =>{
-    res.send('Hello')
+    res.json({message:'Hello'})
 });
 
 

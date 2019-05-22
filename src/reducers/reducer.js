@@ -26,7 +26,6 @@ export default (state = initialState, action) => {
           .set('stepNumber', action.stepNumber)
           .set('xIsNext', !action.xIsNext)
 
-
     case API_CALL_SUCCESS:
       return state.set('isApiCallSuccesfull', true)
 

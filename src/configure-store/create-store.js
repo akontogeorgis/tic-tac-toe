@@ -1,11 +1,10 @@
 import {createStore, applyMiddleware, compose} from 'redux'
 import logger from 'redux-logger'
-import createSagaMiddleware from 'redux-saga'
-import rootSaga from '../sagas/saga.js'
 import rootReducer from '../reducers/reducer.js'
+import { createEpicMiddleware } from 'redux-observable';
+import rootEpic from '../epics/epic.js'
 
 export default () => {
-  const sagaMiddleware = createSagaMiddleware()
 
       //* eslint-disable no-underscore-dangle */
   const composeEnhancers = process.env.NODE_ENV !== 'production'
@@ -14,11 +13,13 @@ export default () => {
       ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({ shouldHotReload: false })
       : compose;
 
-  const middlewares = [sagaMiddleware, logger];
+  const epicMiddleware = createEpicMiddleware();
+  const middlewares = [epicMiddleware, logger];
   const enhancers = [applyMiddleware(...middlewares)];
 
   const store = createStore(rootReducer, composeEnhancers(...enhancers) );
-  sagaMiddleware.run(rootSaga);
+  epicMiddleware.run(rootEpic);
   return store;
+
 };
 
