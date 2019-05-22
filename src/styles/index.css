@@ -56,3 +56,28 @@ ol, ul {
 .highlight-winner{
   background-color:#666666;
 }
+
+
+.tabs {
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
+
+.tabs button {
+  background-color: inherit;
+  border: none;
+  cursor: pointer;
+  padding: 14px 16px;
+}
+
+.tabs button:hover {
+  background-color: #ddd;
+}
+
+.tabs button.active {
+  background-color: #ccc;
+}
+
+.tabContent {
+  border: 1px solid #ccc;
+}

@@ -2,9 +2,8 @@ import React, {useState,useEffect} from 'react';
 //import Immutable from 'immutable'
 import { connect } from 'react-redux';
 import Board from '../board/board.js';
-import {toggleSort, jumpTo, handleClick} from '../../actions/actions.js'
+import {toggleSort, jumpTo, handleClick, apiCallRequest} from '../../actions/actions.js'
 import {calculateWinner} from '../../utils/calculateWinner.js'
-import {apiCallRequest} from "../../actions/actions";
 
 
 function Game (props) {
@@ -95,7 +94,7 @@ const mapStateToProps = state=> {
     xIsNext: state.get('xIsNext'),
     stepNumber: state.get('stepNumber'),
     history: state.get('history'),
-    apiCall: state.get('apiCall')
+    apiCall: state.get('apiCall'),
   }
 }
 
@@ -104,7 +103,8 @@ const mapDispatchToProps = dispatch => {
     handleToggleSort: (isAscending) => { dispatch(toggleSort(isAscending))},
     jumpTo: (move) => { dispatch(jumpTo(move))},
     handleClick: (...props) => {dispatch(handleClick(...props))},
-    apiCall: (apiCall) => {dispatch(apiCallRequest(apiCall))}
+    apiCall: (apiCall) => {dispatch(apiCallRequest(apiCall))},
+
   }
 }
 

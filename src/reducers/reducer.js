@@ -1,5 +1,5 @@
 import {fromJS, setIn, set} from 'immutable'
-import {TOGGLE_SORT, JUMP, CLICK, API_CALL_REQUEST, API_CALL_SUCCESS, API_CALL_FAIL} from '../constants/constants.js'
+import {TOGGLE_SORT, JUMP, CLICK, API_CALL_REQUEST, API_CALL_SUCCESS, API_CALL_FAIL, GET_USER_SUCCESS, GET_USER_FAIL, GET_PASSWORD, GET_USERNAME, GET_EMAIL, CHANGE_TAB} from '../constants/constants.js'
 
 const initialState = fromJS( {
   isAscending: true,
@@ -8,8 +8,13 @@ const initialState = fromJS( {
   history: [{
     squares: Array(9).fill(null)
   }],
-  isApiCallSuccesfull:false,
-  apiCall:false
+  isApiCallSuccessful: false,
+  apiCall: false,
+  existsUser: false,
+  username: '',
+  password:'',
+  email: '',
+  flag: true,
 })
 
 export default (state = initialState, action) => {
@@ -27,10 +32,29 @@ export default (state = initialState, action) => {
           .set('xIsNext', !action.xIsNext)
 
     case API_CALL_SUCCESS:
-      return state.set('isApiCallSuccesfull', true)
+      return state.set('isApiCallSuccessful', true)
 
     case API_CALL_FAIL:
-      return state.set('isApiCallSuccesfull', false)
+      return state.set('isApiCallSuccessful', false)
+
+    case GET_USER_SUCCESS:
+      return state.set('exitsUser', true)
+
+    case GET_USER_FAIL:
+      return state.set('exitsUser', false)
+
+    case GET_USERNAME:
+      return state.set ('username', action.username)
+
+    case GET_PASSWORD:
+      return state.set ('password', action.password)
+
+    case GET_EMAIL:
+      return state.set ('email', action.email)
+
+    case CHANGE_TAB:
+      return state.set ('flag', !action.flag)
+
 
     default:
         return state;
