@@ -1,12 +1,41 @@
-import React, {useState,useEffect} from 'react';
+import React from 'react';
 import {connect} from "react-redux";
-import {getUsername, getPassword, getEmail, getUser, changeTab} from "../../actions/actions";
+import {registerUser, setTab} from "../../actions/actions";
 
 
 class Register extends React.Component {
 
     constructor(props){
         super(props);
+        this.state ={
+            user:'',
+            password: '',
+            password2:'',
+            email: ''
+        }
+        //this.setUsername= this.setUsername.bind(this); axreiasto afou thn exw kanei arrow function
+    }
+
+    setUsername(event){
+        this.setState({user: event.target.value});
+    }
+
+    setPassword(event){
+        this.setState({password: event.target.value});
+    }
+
+    setPassword2(event){
+        this.setState({password2: event.target.value});
+    }
+
+    setEmail(event){
+        this.setState({email: event.target.value});
+    }
+
+
+    registerUser = (event) => {
+        event.preventDefault(); // so page will not be refreshed when submit the form
+        this.props.registerUser(this.state);
     }
 
     render(){
@@ -15,31 +44,31 @@ class Register extends React.Component {
             <React.Fragment>
 
                 <div className="tabs">
-                    <button className="tabButtoms" onClick = {this.props.changeTab}>Login</button>
-                    <button className="tabButtoms" onClick = {this.props.changeTab}>Register</button>
+                    <button className="tabButtoms" onClick = {() => this.props.setTab('Login')}>Login</button>
+                    <button className="tabButtoms" >Register</button>
                 </div>
 
                 <div className = "tabContent" id = "Register" >
                     <h2>User Registration</h2>
-                    <form method ="POST" action="" name="registerForm" onSubmit={this.props.getUserCredentials}>
+                    <form name="registerForm" onSubmit={this.registerUser}>
 
-                        <label><b>Email</b></label>
-                        <input type="email" placeholder="Enter Email" id="email" value={this.props.email} onChange = {this.props.onChangeEmail(this.value)} required/>
-
-                        <br/><br/>
-
-                        <label><b>Username</b></label>
-                        <input type="text" placeholder="Enter Username" id="user_name" value={this.props.username} onChange = {this.props.onChangeUsername(this.value)} required/>
+                        <label><b>Email </b></label>
+                        <input type="email" placeholder="Enter Email" id="email" value={this.state.email} onChange = {event => this.setEmail(event)} required/>
 
                         <br/><br/>
 
-                        <label><b>Password</b></label>
-                        <input type="password" placeholder="Enter Password" id="password" value={this.props.password} onChange = {this.props.onChangePassword(this.value)} required/>
+                        <label><b>Username </b></label>
+                        <input type="text" placeholder="Enter Username" id="user_name" value={this.state.user} onChange = {event => this.setUsername(event)} required/>
 
                         <br/><br/>
 
-                        <label><b>Password again</b></label>
-                        <input type="password" placeholder="Repeat password" id="re-password" value={this.props.password} onChange = {this.props.onChangePassword(this.value)} required/>
+                        <label><b>Password </b></label>
+                        <input type="password" placeholder="Enter Password" id="password" value={this.state.password} onChange = {event => this.setPassword(event)} required/>
+
+                        <br/><br/>
+
+                        <label><b>Password again </b></label>
+                        <input type="password" placeholder="Repeat password" id="re-password" value={this.state.password2} onChange = {event =>this.setPassword2(event)} required/>
 
                         <br/><br/>
 
@@ -54,22 +83,16 @@ class Register extends React.Component {
 
 
 
-const mapStateToProps = state=> {
+const mapStateToProps = state => {
     return {
         existsUser: state.get('existsUser'),
-        username: state.get('username'),
-        password: state.get('password'),
-        email: state.get('email'),
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        onChangeUsername: (username) => {dispatch(getUsername(username))},
-        onChangePassword: (password) => {dispatch(getPassword(password))},
-        onChangeEmail: (email) => {dispatch(getEmail(email))},
-        getUserCredentials: (existsUser) => {dispatch(getUser(existsUser))},
-        changeTab: (flag) => {dispatch(changeTab(flag))}
+        registerUser: (credentials) => {dispatch(registerUser(credentials))},
+        setTab: (currentTab) => {dispatch(setTab(currentTab))},
     }
 }
 

@@ -1,4 +1,4 @@
-import {TOGGLE_SORT, JUMP, CLICK, API_CALL_REQUEST, GET_USERNAME, GET_PASSWORD, GET_EMAIL, GET_USER, CHANGE_TAB} from '../constants/constants.js'
+import {TOGGLE_SORT, JUMP, CLICK, API_CALL_REQUEST, LOGIN_USER, REGISTER_USER, SET_TAB} from '../constants/constants.js'
 
 export function toggleSort(isAscending){
   return {
@@ -31,38 +31,25 @@ export function apiCallRequest(apiCall){
   }
 }
 
-export function getUsername(username) {
+export function loginUser (credentials) {
   return{
-    type: GET_USERNAME,
-    username: username,
+    type: LOGIN_USER,
+    credentials: credentials,
   }
 }
 
-export function getPassword(password) {
+export function registerUser (credentials) {
   return{
-    type: GET_PASSWORD,
-    password: password,
+    type: REGISTER_USER,
+    credentials: credentials,
   }
 }
 
-export function getEmail(email) {
+export function setTab (currentTab) {
   return{
-    type: GET_EMAIL,
-    email: email,
+    type: SET_TAB,
+    currentTab: currentTab,
   }
 }
 
-export function getUser (existsUser) {
-  return{
-    type: GET_USER,
-    existsUser: existsUser,
-  }
-}
-
-export function changeTab (flag) {
-  return{
-    type: CHANGE_TAB,
-    flag: flag,
-  }
-}
 

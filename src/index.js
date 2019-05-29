@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
-import Game from './components/game/game.js';
+//import Game from './components/game/game.js';
 import Authentication from './components/loginForm/authentication.js';
 
 import createStore from './configure-store/create-store.js'
