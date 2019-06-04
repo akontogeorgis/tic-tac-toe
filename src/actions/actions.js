@@ -1,4 +1,4 @@
-import {TOGGLE_SORT, JUMP, CLICK, API_CALL_REQUEST, LOGIN_USER, REGISTER_USER, SET_TAB} from '../constants/constants.js'
+import {TOGGLE_SORT, JUMP, CLICK, API_CALL_REQUEST, LOGIN_USER, REGISTER_USER, SET_TAB, EXISTS_USER} from '../constants/constants.js'
 
 export function toggleSort(isAscending){
   return {
@@ -42,6 +42,13 @@ export function registerUser (credentials) {
   return{
     type: REGISTER_USER,
     credentials: credentials,
+  }
+}
+
+export function existsUser (existsUser) {
+  return{
+    type: EXISTS_USER,
+    existsUser: existsUser,
   }
 }
 

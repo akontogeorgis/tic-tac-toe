@@ -30,16 +30,17 @@ const loginUserEpic = (action) => action.pipe(
         )),
 );
 
-
 const registerUserEpic = (action) => action.pipe(
     ofType('REGISTER_USER'),
     mergeMap(({credentials}) =>
         ajax.post('register', credentials, {'Content-Type': 'application/json'})
         .pipe(
-            //tap(console.log),
-            map(response => ({type:'REGISTER_USER_SUCCESS', response})),
+            tap(console.log),
+            pluck("response","existsUser"),
+            map(response => ({type:'EXISTS_USER', existsUser:response})),
 
-            catchError(response => from([{type:'REGISTER_USER_FAIL', response}]))
+            catchError(response => from([{type:'REGISTER_USER_FAIL', response}])),
+
         )),
 );
 

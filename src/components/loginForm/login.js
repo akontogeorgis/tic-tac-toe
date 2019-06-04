@@ -31,6 +31,7 @@ class Login extends React.Component {
 
         return (
             <React.Fragment>
+            <div className="container">
 
                 <div className="tabs">
                     <button className="tabButtoms">Login</button>
@@ -41,19 +42,17 @@ class Login extends React.Component {
 
                     <h2>User Login</h2>
                     <form name="loginForm" onSubmit={this.loginUser}>
-                        <label><b>Username </b></label>
                         <input type="text" placeholder="Enter Username" id="user_name" value={this.state.user} onChange = {event => this.setUsername(event)} required/>
                         <br/><br/>
-                        <label><b>Password </b></label>
                         <input type="password" placeholder="Enter Password" id="password" value={this.state.password} onChange = {event => this.setPassword(event)} required/>
 
                         <br/><br/>
 
-                        <button type="submit">Login</button>
+                        <button type="submit" className = "submitButton"><strong>Login</strong></button>
                     </form>
 
                 </div>
-
+            </div>
             </React.Fragment>
         );
     }

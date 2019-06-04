@@ -1,5 +1,5 @@
 import {fromJS,} from 'immutable'
-import {TOGGLE_SORT, JUMP, CLICK, API_CALL_SUCCESS, API_CALL_FAIL, LOGIN_USER_SUCCESS, LOGIN_USER_FAIL, REGISTER_USER_SUCCESS, REGISTER_USER_FAIL, SET_TAB} from '../constants/constants.js'
+import {TOGGLE_SORT, JUMP, CLICK, API_CALL_SUCCESS, API_CALL_FAIL, LOGIN_USER_SUCCESS, LOGIN_USER_FAIL, REGISTER_USER_SUCCESS, REGISTER_USER_FAIL, EXISTS_USER, SET_TAB} from '../constants/constants.js'
 
 const initialState = fromJS( {
   isAscending: true,
@@ -11,7 +11,9 @@ const initialState = fromJS( {
   isApiCallSuccessful: false,
   apiCall: false,
   existsUser: false,
-  username: '',
+  firstName: '',
+  lastName: '',
+  dateOfBirth: '',
   password:'',
   email: '',
   currentTab: 'Login',
@@ -50,6 +52,10 @@ export default (state = initialState, action) => {
 
     case REGISTER_USER_FAIL:
       return state.set('isRegisterSuccessful', false)
+
+    case EXISTS_USER:
+      return state.set('existsUser', action.existsUser)
+
 
     case SET_TAB:
       return state.set ('currentTab', action.currentTab)

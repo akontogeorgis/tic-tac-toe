@@ -81,3 +81,30 @@ ol, ul {
 .tabContent {
   border: 1px solid #ccc;
 }
+
+
+
+.equalPasswords{
+  color: green;
+}
+
+.notEqualPasswords{
+  color: red;
+}
+
+
+.container {
+  padding: auto;
+  width:55%;
+  margin: auto;
+  text-align:center;
+}
+
+.submitButton {
+  background-color: #4CAF50;
+  color: white;
+  padding: 16px 20px;
+  margin: 10px;
+  border: none;
+  width: 20%;
+}

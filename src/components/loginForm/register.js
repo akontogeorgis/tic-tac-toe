@@ -1,6 +1,7 @@
 import React from 'react';
+import DatePicker from 'react-date-picker';
 import {connect} from "react-redux";
-import {registerUser, setTab} from "../../actions/actions";
+import {registerUser, setTab, existsUser} from "../../actions/actions";
 
 
 class Register extends React.Component {
@@ -8,41 +9,46 @@ class Register extends React.Component {
     constructor(props){
         super(props);
         this.state ={
-            user:'',
+            firstName:'',
+            lastName:'',
+            dateOfBirth: new Date(),
             password: '',
             password2:'',
-            email: ''
+            email: '',
+            isPassEqual: true,
         }
         //this.setUsername= this.setUsername.bind(this); axreiasto afou thn exw kanei arrow function
     }
 
-    setUsername(event){
-        this.setState({user: event.target.value});
+
+//anti gia handleEvent(event) pairnw ta name,value mesw destructure
+
+    handleEvent = ({target:{name, value}}) => {
+        this.setState({[name]: value});
     }
 
-    setPassword(event){
-        this.setState({password: event.target.value});
+    comparePasswords({target:{name, value}}){
+        this.setState({[name]: value})
+        let isPassEqual = this.state.password === value;
+        this.setState({isPassEqual: isPassEqual})
     }
-
-    setPassword2(event){
-        this.setState({password2: event.target.value});
-    }
-
-    setEmail(event){
-        this.setState({email: event.target.value});
-    }
-
 
     registerUser = (event) => {
         event.preventDefault(); // so page will not be refreshed when submit the form
-        this.props.registerUser(this.state);
+        const response = this.props.registerUser(this.state);
+        existsUser(response);
+        if(this.props.existsUser===true){
+            console.log("yes")
+        }else{
+            console.log("not")
+        }
     }
 
     render(){
 
         return (
             <React.Fragment>
-
+            <div className="container">
                 <div className="tabs">
                     <button className="tabButtoms" onClick = {() => this.props.setTab('Login')}>Login</button>
                     <button className="tabButtoms" >Register</button>
@@ -52,29 +58,36 @@ class Register extends React.Component {
                     <h2>User Registration</h2>
                     <form name="registerForm" onSubmit={this.registerUser}>
 
-                        <label><b>Email </b></label>
-                        <input type="email" placeholder="Enter Email" id="email" value={this.state.email} onChange = {event => this.setEmail(event)} required/>
+                        <input type="email" placeholder="Enter Email" id="email" name = "email" value={this.state.email} onChange =  {this.handleEvent} required/>
+
+                        <br/><br/>
+                        <input type="text" placeholder="Enter First Name" id="first_name" name = "firstName" value={this.state.firstName} onChange = {this.handleEvent} required/>
 
                         <br/><br/>
 
-                        <label><b>Username </b></label>
-                        <input type="text" placeholder="Enter Username" id="user_name" value={this.state.user} onChange = {event => this.setUsername(event)} required/>
+                        <input type="text" placeholder="Enter Last Name" id="last_name" name = "lastName" value={this.state.lastName} onChange = {this.handleEvent} required/>
+
+                        <br/><br/>
+                        <DatePicker
+                            id="dateOfBirth"
+                            name = "dateOfBirth"
+                            onChange={this.handleEvent}
+                            value={this.state.dateOfBirth}
+                        />
+                        <br/><br/>
+
+                        <input type="password" placeholder="Enter Password" id="password" name = "password" value={this.state.password} onChange = {this.handleEvent} required/>
 
                         <br/><br/>
 
-                        <label><b>Password </b></label>
-                        <input type="password" placeholder="Enter Password" id="password" value={this.state.password} onChange = {event => this.setPassword(event)} required/>
+                        <input type="password" placeholder="Confirm Password" id="re-password" className = {`${this.state.isPassEqual ? 'equalPasswords' : 'notEqualPasswords'}`} name = "password2" value={this.state.password2} onChange = {event =>this.comparePasswords(event)} required/>
 
                         <br/><br/>
 
-                        <label><b>Password again </b></label>
-                        <input type="password" placeholder="Repeat password" id="re-password" value={this.state.password2} onChange = {event =>this.setPassword2(event)} required/>
-
-                        <br/><br/>
-
-                        <button type="submit">Register</button>
+                        <button type="submit" className = "submitButton"><strong>Register</strong></button>
                     </form>
                 </div>
+            </div>
 
             </React.Fragment>
         );
@@ -93,6 +106,7 @@ const mapDispatchToProps = dispatch => {
     return {
         registerUser: (credentials) => {dispatch(registerUser(credentials))},
         setTab: (currentTab) => {dispatch(setTab(currentTab))},
+        existsUser: (existUser) => {dispatch(existsUser(existUser))},
     }
 }
 
