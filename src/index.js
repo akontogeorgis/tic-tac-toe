@@ -4,7 +4,7 @@ import {Provider} from 'react-redux';
 import Home from './components/home.js';
 
 import createStore from './configure-store/create-store.js'
-import './styles/index.css';
+import './styles/index.scss';
 
 const store = createStore();
 

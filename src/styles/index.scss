@@ -1,0 +1,234 @@
+body {
+
+  font: 14px "Century Gothic", Futura, sans-serif;
+  margin: 20px;
+  overflow:hidden; //no scroll bar
+  /*
+  background-image:url("background.jpg");
+  background-repeat:no-repeat;
+  background-size:cover;
+*/
+
+}
+
+
+.background {
+  position: relative;
+  border: solid 1.5em rgba(#000, 0);
+  width: 95vw;
+  height: 92vh;
+  background: url(background.jpg)
+                  border-box
+                  padding-box ;
+
+&:before {
+   position: absolute;
+   z-index: -1;
+   top: -2.5em; right: -2.5em; bottom: -2.5em; left: -2.5em;
+   background: inherit;
+   background-clip: border-box;
+   filter: blur(9px);
+   content: ''
+ }
+}
+
+
+ol, ul {
+  padding-left: 30px;
+}
+
+.board-row:after {
+  clear: both;
+  content: "";
+  display: table;
+}
+
+.status {
+  margin-bottom: 10px;
+}
+
+.square {
+  background: #fff;
+  border: 1px solid #999;
+  float: left;
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 34px;
+  height: 34px;
+  margin-right: -1px;
+  margin-top: -1px;
+  padding: 0;
+  text-align: center;
+  width: 34px;
+}
+
+.square:focus {
+  outline: none;
+}
+
+.kbd-navigation .square:focus {
+  background: #ddd;
+}
+
+.game {
+  display: flex;
+  flex-direction: row;
+}
+
+.game-info {
+  margin-left: 20px;
+}
+
+.selected-move{
+  font-weight: bold;
+}
+
+.highlight-winner{
+  background-color:#666666;
+}
+
+
+.tabs {
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
+
+.tabs button {
+  background-color: inherit;
+  border: none;
+  cursor: pointer;
+  padding: 14px 16px;
+}
+
+.tabs button:hover {
+  background-color: #ddd;
+}
+
+.tabs button.active {
+  background-color: #ccc;
+}
+
+.tabContent {
+  border: 1px solid #ccc;
+}
+
+/***********************************/
+
+.equalPasswords{
+  color: green;
+}
+
+.notEqualPasswords{
+  color: red;
+}
+
+
+.container {
+  padding: auto;
+  width:55%;
+  margin: auto;
+  text-align:center;
+}
+
+/*********************************************/
+
+header{
+  position:fixed;
+  top:0%;
+  left:0%;
+  width:100%;
+  height:5%;
+ // background-color: #006699;
+
+}
+
+.loginForm{
+  position: absolute;
+  right:1%;
+  top:0%;
+  width: 40%;
+  height:100%;
+}
+
+.loginForm button {
+  position: absolute;
+  top: 5%;
+  margin:1%;
+}
+
+.loginForm input{
+  position:relative;
+  top: 20%;
+  margin:1%;
+}
+
+
+.loginButton{
+  background-color:#1a66ff;
+  border-radius:10px;
+  border:none;
+  width:7%;
+}
+
+.loginButton:hover{
+  width:10%;
+}
+
+input{
+  border-radius: 10px;
+  background-color:#b3e6ff;
+  border:none;
+  text-align:center;
+}
+
+
+button:hover{
+  cursor: pointer;
+}
+
+.registerForm{
+  position: absolute;
+  width: 25vw;
+  //height:5%;
+  right: 30vw;
+  padding: auto;
+  margin: 5%;
+  text-align: center;
+  border: solid 1px #006699;
+  border-radius:15px;
+  background-color:rgba(0, 0, 0, 0.35);
+}
+
+.registerButton{
+  background-color:#1a66ff;
+  width:20%;
+  padding:2%;
+  margin: 5%;
+  border: none;
+  border-radius:10px;
+}
+/*
+.registerForm:hover{
+  height:40vh;
+  transition-delay:0.1s;
+  transition-duration: 1s;
+}
+*/
+.registerForm form {
+
+  margin-top:5%;
+  width: 100%;
+}
+
+.registerForm h2{
+  background-color: #1a66ff;
+  width: 100%;
+  margin: auto;
+  padding: 10px 0px;
+  border-bottom: solid 1px;
+  border-radius:15px;
+}
+
+.dateOfBirth{
+  background-color:#b3e6ff;
+}

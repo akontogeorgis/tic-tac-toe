@@ -1,6 +1,7 @@
-const bodyParser = require('body-parser')
-const express = require('express')
-const app = express()
+const bodyParser = require('body-parser');
+const express = require('express');
+const app = express();
+var path = require('path');
 const port = 3000
 
 const { Client } = require('@elastic/elasticsearch/index')
@@ -11,7 +12,6 @@ client.cluster.health({},function(err,resp,status) {
     console.log("-- Client Health --",resp);
 });
 */
-
 
 async function registerUser({body:{firstName,lastName, email, dateOfBirth, password}}, res) {
     try {
@@ -81,6 +81,10 @@ function myMiddleware (req, res, next) {
 app.use(bodyParser.urlencoded({ extended: false }))
 
 app.use(bodyParser.json())
+
+app.get('/', (req, res) =>{
+    res.sendFile(path.join(__dirname + '/../src/assets/index.html'));
+});
 
 app.get('/a', (req, res) =>{
     res.json({message:'Hello'})
