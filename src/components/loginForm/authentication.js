@@ -1,36 +1,24 @@
 import React from 'react';
-import Login from './login.js'
-import Register from './register.js'
-import {connect} from "react-redux";
+import { connect } from 'react-redux';
+import Login from './login';
+import Register from './register';
 
 
 function Authentication(props) {
+	switch (props.currentTab) {
+		case 'Login':
+			return <Login />;
 
-    switch(props.currentTab){
+		case 'Register':
+			return <Register />;
 
-        case 'Login':
-            return <Login />;
-
-        case 'Register':
-            return <Register />;
-
-        default:
-            return <Login />;
-
-    }
-
+		default:
+			return <Login />;
+	}
 }
 
-const mapStateToProps = state=> {
-    return {
-        currentTab: state.get('currentTab'),
-    }
-}
+const mapStateToProps = state => ({
+	currentTab: state.get('currentTab'),
+});
 
-const mapDispatchToProps = dispatch => {
-    return {
-
-    }
-}
-
-export default connect(mapStateToProps,mapDispatchToProps)(Authentication);
+export default connect(mapStateToProps)(Authentication);

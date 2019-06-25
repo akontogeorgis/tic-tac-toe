@@ -1,16 +1,16 @@
 import React from 'react';
-import {shallow, mount, render} from 'enzyme';
-import Board from './board.js'
+import {
+	shallow,
+	// mount, render,
+} from 'enzyme';
+
+import Board from './board';
 
 describe('Test the Square component', () => {
-
-    it("renders correctly", () => {
-
-        const wrapper = shallow(
-            <Board square={0} />
-        );
-        expect(wrapper.exists()).toEqual(true);
-    });
-
-
+	it('renders correctly', () => {
+		const wrapper = shallow(
+			<Board square={0} />,
+		);
+		expect(wrapper.exists()).toEqual(true);
+	});
 });
